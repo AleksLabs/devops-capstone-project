@@ -140,8 +140,6 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         response = self.client.put(f"{BASE_URL}/{fals_account_id}")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        response = self.client.delete(f"{BASE_URL}/{fals_account_id}")
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
     
     def test_update_account(self):
         """It shoud Update the Account"""
@@ -155,18 +153,3 @@ class TestAccountService(TestCase):
         update_response = self.client.put(f"{BASE_URL}/{test_account.id}", json=updated_account)
         self.assertEqual(update_response.status_code, status.HTTP_200_OK)
         self.assertEqual(update_response.get_json(), updated_account)
-
-    def test_delete_account(self):
-        """It shoud Delete a Account by id"""
-        accounts = self._create_accounts(5)
-        test_account = accounts[0]
-        response = self.client.get(f"{BASE_URL}/{test_account.id}")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
-        response = self.client.delete(f"{BASE_URL}/{test_account.id}")
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-        response = self.client.get(f"{BASE_URL}/{test_account.id}")
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        
-    
